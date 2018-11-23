@@ -14,12 +14,12 @@ public class LinkedListDeque<T> {
     private int size;
     private Node sentinel;
 
-    public LinkedListDeque(){
+    public LinkedListDeque() {
         sentinel = new Node(null, sentinel, sentinel);
         size = 0;
     }
 
-    public void addFirst(T x){
+    public void addFirst(T x) {
         if (size >= 1) {
             sentinel.next = new Node(x, sentinel.prev, sentinel.next);
             sentinel.next.next.prev = sentinel.next;
@@ -29,6 +29,23 @@ public class LinkedListDeque<T> {
             sentinel.prev = sentinel.next;
             sentinel.prev.next = sentinel;
             sentinel.prev.prev = sentinel.next.next;
+        }
+        size += 1;
+    }
+
+    public void addLast(T x) {
+        if (size < 1) {
+            sentinel.next = new Node(x, sentinel.prev, sentinel.next);
+            sentinel.prev = sentinel.next;
+            sentinel.prev.next = sentinel;
+            sentinel.next.next = sentinel.prev;
+        } else if (size < 2) {
+            sentinel.prev = new Node(x, sentinel.next, sentinel);
+            sentinel.next.next = sentinel.prev;
+        } else {
+            sentinel.prev = new Node(x, sentinel.prev, sentinel);
+            sentinel.prev.prev.next = sentinel.prev;
+            sentinel.prev.prev = sentinel.prev.prev.prev.next;
         }
         size += 1;
     }
